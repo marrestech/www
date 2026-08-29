@@ -16,7 +16,7 @@
 - Run `npm run preview` against the production build before review.
 - Capture screenshots at 1440×1000 and 390×844.
 - Open a pull request assigned to `@rrvsh`. Attach both screenshots, and include a concise summary and validation results.
-- Upload review screenshots as GitHub attachments. Never commit them to the repository.
+- For review media, follow `.agents/skills/github-pr-media/SKILL.md`. Upload the file with the repository ID and `gh` token, then embed the returned GitHub attachment URL. Never commit review media.
 - Stop after opening the pull request. Never merge it.
 
 ## Safety
