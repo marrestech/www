@@ -1,0 +1,276 @@
+meta:
+  language: en
+  description: Marres decision intelligence for growing businesses.
+  title: Marres Insights — Decision Intelligence for SMEs
+brand:
+  name: marres
+  suffix: INSIGHTS
+  href: "#top"
+navigation:
+  ariaLabel: Primary
+  items:
+    - label: Solutions
+      href: "#solutions"
+    - label: Resources
+      href: "#resources"
+    - label: Pricing
+      href: "#pricing"
+  actions:
+    - label: Sign in
+      href: /login
+      style: plain
+    - label: Get started
+      href: /signup
+      style: dark
+hero:
+  eyebrow: DECISION INTELLIGENCE FOR GROWING BUSINESSES
+  heading:
+    - Make high-stakes decisions
+    - without an enterprise-sized team.
+  description: Marres turns the evidence you already have into a clear view of what is happening, what could happen next, and what you should do about it.
+  actions:
+    - label: Start your first analysis
+      href: /signup
+      style: dark
+    - label: See how it works ↓
+      href: "#workflow"
+      style: quiet
+capabilities:
+  - number: "01"
+    hint: HOVER FOR COLOUR
+    image: images/space-understand.webp
+    alt: A detailed field of luminous interstellar clouds revealing layered structure
+    title: Understand
+    description: Bring together business data and market evidence to reveal what matters and where effort could count.
+  - number: "02"
+    hint: HOVER FOR COLOUR
+    image: images/space-simulate.webp
+    alt: An expanding stellar shell suggesting multiple possible futures
+    title: Simulate
+    description: Compare choices, model market reactions and stress-test strategies across uncertain futures.
+  - number: "03"
+    hint: HOVER FOR COLOUR
+    image: images/space-monitor.webp
+    alt: A distinct luminous signal surrounded by a dark field
+    title: Monitor
+    description: Watch the external signals that could change the answer and reopen the decision when something material happens.
+  - number: "04"
+    hint: HOVER FOR COLOUR
+    image: images/space-trace.webp
+    alt: A continuous stellar outflow tracing a path through space
+    title: Trace
+    description: Record the chosen intervention, evaluate what happened and preserve the evidence, assumptions and approvals.
+decisionSystem:
+  eyebrow: MEET YOUR DECISION SYSTEM
+  heading:
+    - A serious analytical partner.
+    - Without the consulting overhead.
+  description: Most SME decisions are not short of opinions. They are short of structure. Marres carries your question through evidence, mechanisms, scenarios and action—without losing the thread.
+  action:
+    label: Explore the approach
+    href: "#workflow"
+  brief:
+    reference: MARRES BRIEF / 024
+    status: READY TO REVIEW
+    category: DECISION
+    question: Should we open a second outlet this quarter?
+    indicators:
+      - label: Demand
+        value: Positive
+      - label: Capacity
+        value: Constrained
+      - label: Downside
+        value: Manageable
+    answerLabel: ROBUST NEXT MOVE
+    answer: Stage the expansion. Secure capacity first; commit the lease only when the demand trigger is met.
+understand:
+  panel:
+    reference: M3 / DOMAIN DECISION VIEW
+    status: POSITION → OPPORTUNITY
+    headers:
+      - DOMAIN
+      - TARGET → BEST PEER
+      - OPPORTUNITY
+      - UPLIFT
+    peerLabel: PEER
+    rows:
+      - name: Product strength
+        elasticity: Elasticity 0.173
+        gapAriaLabel: Target score 6.2; best peer score 8.2
+        gapWidth: 76
+        opportunityAriaLabel: 0.250 percent direct and 0.101 percent indirect opportunity
+        directWidth: 71
+        indirectWidth: 29
+        uplift: 1,474
+        upliftPeriod: / MONTH
+        focus: true
+      - name: Service experience
+        elasticity: Elasticity 0.329
+        gapAriaLabel: Target score 5.1; best peer score 7.7
+        gapWidth: 66
+        opportunityAriaLabel: 0.250 percent direct and 0.082 percent indirect opportunity
+        directWidth: 75
+        indirectWidth: 25
+        uplift: 1,392
+        upliftPeriod: / MONTH
+        focus: false
+      - name: Market visibility
+        elasticity: Elasticity 0.053
+        gapAriaLabel: Target score 4.3; best peer score 8.1
+        gapWidth: 53
+        opportunityAriaLabel: 0.235 percent direct and 0.104 percent indirect opportunity
+        directWidth: 69
+        indirectWidth: 31
+        uplift: 1,426
+        upliftPeriod: / MONTH
+        focus: false
+      - name: Customer trust
+        elasticity: Elasticity 0.445
+        gapAriaLabel: Target score 6.0; best peer score 7.9
+        gapWidth: 76
+        opportunityAriaLabel: 0.250 percent direct and 0.068 percent indirect opportunity
+        directWidth: 79
+        indirectWidth: 21
+        uplift: 1,335
+        upliftPeriod: / MONTH
+        focus: false
+    key:
+      direct: Direct opportunity
+      indirect: Indirect opportunity
+    calloutLabel: WHAT MARRES REVEALS
+    callout: "Largest gap: visibility. Highest calculated opportunity: product."
+    note: Illustrative product preview using a reproducible synthetic M3 compiler run. Not a customer result or forecast.
+  copy:
+    eyebrow: 01 / UNDERSTAND
+    heading: See the shape of your business—not another wall of charts.
+    description: Marres compresses noisy operational data into the few dimensions that explain how the business is moving. Then it shows what the numbers still cannot explain.
+    points:
+      - Business-state baseline
+      - Signal and anomaly detection
+      - Questions for deeper evidence
+explain:
+  copy:
+    eyebrow: 02 / EXPLAIN
+    heading: Move from correlation to a mechanism you can challenge.
+    description: Marres maps how customer behaviour, operating constraints, market signals and commercial outcomes may interact. Assumptions remain visible, so a convincing story is never mistaken for proof.
+    points:
+      - Evidence traceability
+      - Mechanism mapping
+      - Causal checks and caveats
+  mechanism:
+    nodes:
+      - label: SIGNAL
+        value: Customer demand
+      - label: MECHANISM
+        value: Capacity pressure
+      - label: OUTCOME
+        value: Lost conversion
+    connector: →
+    assumptionLabel: ASSUMPTION TO TEST
+    assumption: Demand is being constrained by throughput—not weaker intent.
+simulate:
+  panel:
+    reference: STRATEGY TEST
+    status: 12 PLAUSIBLE FUTURES
+    options:
+      - label: Option A
+        score: "54"
+        selected: false
+      - label: Option B
+        score: "82"
+        selected: true
+      - label: Option C
+        score: "68"
+        selected: false
+  copy:
+    eyebrow: 03 / SIMULATE
+    heading: Choose for more than one version of the future.
+    description: A precise forecast can still be fragile. Marres tests your options across plausible conditions and finds the strategy that remains useful when reality refuses to follow the plan.
+    points:
+      - Deep-uncertainty scenarios
+      - Competitive-response simulation
+      - Robust and adaptive strategies
+workflow:
+  eyebrow: ONE CONNECTED WORKFLOW
+  heading: Your evidence travels with the decision.
+  steps:
+    - number: "01"
+      label: QUESTION
+    - number: "02"
+      label: EVIDENCE
+    - number: "03"
+      label: MODEL
+    - number: "04"
+      label: ACTION
+questions:
+  eyebrow: QUESTIONS MARRES IS BUILT TO ANSWER
+  heading:
+    - Start with the decision.
+    - Marres connects the rest.
+  items:
+    - category: GROWTH
+      question: Where should our next dollar, hire or outlet go?
+      actionLabel: Explore allocation ↗
+      href: /use-cases
+    - category: POSITIONING
+      question: What do customers value—and where are rivals exposed?
+      actionLabel: Explore evidence ↗
+      href: /use-cases
+    - category: UNCERTAINTY
+      question: Which strategy survives if our forecast is wrong?
+      actionLabel: Explore scenarios ↗
+      href: /use-cases
+industries:
+  intro:
+    eyebrow: DECISIONS IN PRACTICE
+    heading: Built for businesses where every commitment counts.
+    description: Marres helps lean organisations reason with the discipline usually reserved for much larger firms.
+    actionLabel: Explore use cases
+    href: /use-cases
+  cases:
+    - category: HOSPITALITY / GROWTH
+      heading: Separate stronger demand from an overloaded operation.
+      description: A structured view of where expansion could create value—and what must be true first.
+      tone: violet
+    - category: PROFESSIONAL SERVICES / POSITIONING
+      heading: Find the commercial signal inside fragmented market evidence.
+      description: A sharper position grounded in what the market reveals, not a generic benchmark.
+      tone: orange
+pricing:
+  eyebrow: SERIOUS THINKING. SME-SIZED ENTRY POINT.
+  heading:
+    - Begin with one business.
+    - Scale when the value is clear.
+  description: All decision modules stay available. Only evidence-heavy processing uses flexible credits, so you are not paying enterprise prices for capacity you do not need.
+  plan:
+    name: STARTER
+    price: S$99
+    period: / month
+    features:
+      - One physical outlet
+      - One user seat
+      - Full decision workflow
+      - Flexible MIMIRI compute credits
+    actionLabel: See plans and pricing
+    href: /pricing
+finalCallToAction:
+  eyebrow: YOUR NEXT DECISION ALREADY HAS A COST.
+  heading:
+    - Give it a case
+    - strong enough to act on.
+  actions:
+    - label: Start your first analysis
+      href: /signup
+      style: dark
+    - label: Talk to us ↗
+      href: /talk-to-us
+      style: quiet
+footer:
+  tagline: Decision intelligence for growing businesses.
+  links:
+    - label: Solutions
+      href: "#solutions"
+    - label: Resources
+      href: "#resources"
+    - label: Pricing
+      href: "#pricing"

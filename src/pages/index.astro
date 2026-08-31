@@ -1,0 +1,399 @@
+---
+import { getEntry } from "astro:content";
+import "../styles/site.css";
+
+const entry = await getEntry("home", "page");
+if (!entry) {
+  throw new Error("Missing home page content");
+}
+
+const content = entry.data;
+const actionClasses = {
+  plain: undefined,
+  dark: "pill pill-dark",
+  quiet: "quiet",
+};
+---
+
+<!doctype html>
+<html lang={content.meta.language}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={content.meta.description} />
+    <title>{content.meta.title}</title>
+  </head>
+  <body>
+    <!-- SECTION: NAVIGATION -->
+    <header class="topnav">
+      <a class="wordmark" href={content.brand.href}>
+        {content.brand.name}<small>{content.brand.suffix}</small>
+      </a>
+      <nav aria-label={content.navigation.ariaLabel}>
+        {
+          content.navigation.items.map((item) => (
+            <a href={item.href}>{item.label}</a>
+          ))
+        }
+      </nav>
+      <div class="nav-actions">
+        {
+          content.navigation.actions.map((action) => (
+            <a class={actionClasses[action.style]} href={action.href}>
+              {action.label}
+            </a>
+          ))
+        }
+      </div>
+    </header>
+
+    <!-- SECTION: HERO -->
+    <section class="hero" id="top">
+      <div class="hero-copy">
+        <p class="label">{content.hero.eyebrow}</p>
+        <h1>
+          {
+            content.hero.heading.map((line, index) => (
+              <>
+                {line}
+                {index < content.hero.heading.length - 1 && <br />}
+              </>
+            ))
+          }
+        </h1>
+        <p>{content.hero.description}</p>
+        <div class="actions">
+          {
+            content.hero.actions.map((action) => (
+              <a class={actionClasses[action.style]} href={action.href}>
+                {action.label}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+      <div class="lenses">
+        {
+          content.capabilities.map((capability) => (
+            <article class="lens" tabindex="0">
+              <div class="mountain">
+                <img src={capability.image} alt={capability.alt} />
+                <span>{capability.number}</span>
+                <small>{capability.hint}</small>
+              </div>
+              <h2>{capability.title}</h2>
+              <p>{capability.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- SECTION: DECISION BRIEF -->
+    <section class="feature soft" id="solutions">
+      <div class="copy">
+        <p class="label">{content.decisionSystem.eyebrow}</p>
+        <h2>
+          {
+            content.decisionSystem.heading.map((line, index) => (
+              <>
+                {line}
+                {index < content.decisionSystem.heading.length - 1 && <br />}
+              </>
+            ))
+          }
+        </h2>
+        <p>{content.decisionSystem.description}</p>
+        <a class="pill pill-dark" href={content.decisionSystem.action.href}>
+          {content.decisionSystem.action.label}
+        </a>
+      </div>
+      <div class="panel brief">
+        <div class="panel-top">
+          <span>{content.decisionSystem.brief.reference}</span>
+          <b>{content.decisionSystem.brief.status}</b>
+        </div>
+        <p class="brief-tag">{content.decisionSystem.brief.category}</p>
+        <h3>{content.decisionSystem.brief.question}</h3>
+        <div class="brief-grid">
+          {
+            content.decisionSystem.brief.indicators.map((indicator) => (
+              <div>
+                <span>{indicator.label}</span>
+                <strong>{indicator.value}</strong>
+              </div>
+            ))
+          }
+        </div>
+        <div class="answer">
+          <span>{content.decisionSystem.brief.answerLabel}</span>
+          <p>{content.decisionSystem.brief.answer}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: UNDERSTAND -->
+    <section class="feature" id="workflow">
+      <div class="panel">
+        <div class="panel-top">
+          <span>{content.understand.panel.reference}</span>
+          <b>{content.understand.panel.status}</b>
+        </div>
+        <div class="decision-view">
+          <div class="decision-head">
+            {
+              content.understand.panel.headers.map((header) => (
+                <span>{header}</span>
+              ))
+            }
+          </div>
+          {
+            content.understand.panel.rows.map((row) => (
+              <div class:list={["decision-row", { "is-focus": row.focus }]}>
+                <div class="domain-name">
+                  <b>{row.name}</b>
+                  <small>{row.elasticity}</small>
+                </div>
+                <span class="gap-track" aria-label={row.gapAriaLabel}>
+                  <i style={`width:${row.gapWidth}%`} />
+                  <small class="gap-peer">
+                    {content.understand.panel.peerLabel}
+                  </small>
+                </span>
+                <span
+                  class="opportunity-bar"
+                  aria-label={row.opportunityAriaLabel}
+                >
+                  <i style={`width:${row.directWidth}%`} />
+                  <em style={`width:${row.indirectWidth}%`} />
+                </span>
+                <span class="uplift">
+                  <strong>{row.uplift}</strong>
+                  <small>{row.upliftPeriod}</small>
+                </span>
+              </div>
+            ))
+          }
+          <div class="decision-key">
+            <span
+              ><i class="direct"></i>{content.understand.panel.key.direct}</span
+            >
+            <span
+              ><i class="indirect"></i>{
+                content.understand.panel.key.indirect
+              }</span
+            >
+          </div>
+          <div class="decision-callout">
+            <span>{content.understand.panel.calloutLabel}</span>
+            <p>{content.understand.panel.callout}</p>
+          </div>
+          <small class="decision-note">{content.understand.panel.note}</small>
+        </div>
+      </div>
+      <div class="copy">
+        <p class="label">{content.understand.copy.eyebrow}</p>
+        <h2>{content.understand.copy.heading}</h2>
+        <p>{content.understand.copy.description}</p>
+        <ul>
+          {content.understand.copy.points.map((point) => <li>{point}</li>)}
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION: EXPLAIN -->
+    <section class="feature soft flip">
+      <div class="copy">
+        <p class="label">{content.explain.copy.eyebrow}</p>
+        <h2>{content.explain.copy.heading}</h2>
+        <p>{content.explain.copy.description}</p>
+        <ul>
+          {content.explain.copy.points.map((point) => <li>{point}</li>)}
+        </ul>
+      </div>
+      <div class="panel mechanism-map">
+        {
+          content.explain.mechanism.nodes.map((node, index) => (
+            <>
+              <div class="node">
+                <small>{node.label}</small>
+                <b>{node.value}</b>
+              </div>
+              {index < content.explain.mechanism.nodes.length - 1 && (
+                <span class="connector">
+                  {content.explain.mechanism.connector}
+                </span>
+              )}
+            </>
+          ))
+        }
+        <div class="assumption">
+          <span>{content.explain.mechanism.assumptionLabel}</span>
+          <p>{content.explain.mechanism.assumption}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: SIMULATE -->
+    <section class="feature">
+      <div class="panel">
+        <div class="panel-top">
+          <span>{content.simulate.panel.reference}</span>
+          <b>{content.simulate.panel.status}</b>
+        </div>
+        {
+          content.simulate.panel.options.map((option) => (
+            <div class:list={["strategy", { selected: option.selected }]}>
+              <span>{option.label}</span>
+              <div class="bars">
+                {Array.from({ length: 6 }, () => (
+                  <i />
+                ))}
+              </div>
+              <b class="score">{option.score}</b>
+            </div>
+          ))
+        }
+      </div>
+      <div class="copy">
+        <p class="label">{content.simulate.copy.eyebrow}</p>
+        <h2>{content.simulate.copy.heading}</h2>
+        <p>{content.simulate.copy.description}</p>
+        <ul>
+          {content.simulate.copy.points.map((point) => <li>{point}</li>)}
+        </ul>
+      </div>
+    </section>
+
+    <!-- SECTION: CONNECTED WORKFLOW -->
+    <section class="metrics">
+      <div>
+        <p class="label">{content.workflow.eyebrow}</p>
+        <h2>{content.workflow.heading}</h2>
+      </div>
+      {
+        content.workflow.steps.map((step) => (
+          <div class="metric">
+            <strong>{step.number}</strong>
+            <span>{step.label}</span>
+          </div>
+        ))
+      }
+    </section>
+
+    <!-- SECTION: USE CASES -->
+    <section class="questions" id="resources">
+      <p class="label">{content.questions.eyebrow}</p>
+      <h2>
+        {
+          content.questions.heading.map((line, index) => (
+            <>
+              {line}
+              {index < content.questions.heading.length - 1 && <br />}
+            </>
+          ))
+        }
+      </h2>
+      <div class="question-grid">
+        {
+          content.questions.items.map((item) => (
+            <article>
+              <span>{item.category}</span>
+              <h3>{item.question}</h3>
+              <a href={item.href}>{item.actionLabel}</a>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- SECTION: INDUSTRIES -->
+    <section class="cases">
+      <div class="case-intro">
+        <p class="label">{content.industries.intro.eyebrow}</p>
+        <h2>{content.industries.intro.heading}</h2>
+        <p>{content.industries.intro.description}</p>
+        <a class="pill pill-light" href={content.industries.intro.href}>
+          {content.industries.intro.actionLabel}
+        </a>
+      </div>
+      {
+        content.industries.cases.map((item) => (
+          <article class={`case case-${item.tone}`}>
+            <span>{item.category}</span>
+            <h3>{item.heading}</h3>
+            <p>{item.description}</p>
+          </article>
+        ))
+      }
+    </section>
+
+    <!-- SECTION: PRICING -->
+    <section class="pricing" id="pricing">
+      <div class="pricing-copy">
+        <p class="label">{content.pricing.eyebrow}</p>
+        <h2>
+          {
+            content.pricing.heading.map((line, index) => (
+              <>
+                {line}
+                {index < content.pricing.heading.length - 1 && <br />}
+              </>
+            ))
+          }
+        </h2>
+        <p>{content.pricing.description}</p>
+      </div>
+      <div class="price-card">
+        <span>{content.pricing.plan.name}</span>
+        <div>
+          <strong>{content.pricing.plan.price}</strong>
+          <small>{content.pricing.plan.period}</small>
+        </div>
+        <ul>
+          {content.pricing.plan.features.map((feature) => <li>{feature}</li>)}
+        </ul>
+        <a class="pill pill-dark" href={content.pricing.plan.href}>
+          {content.pricing.plan.actionLabel}
+        </a>
+      </div>
+    </section>
+
+    <!-- SECTION: FINAL CTA -->
+    <section class="final">
+      <p class="label">{content.finalCallToAction.eyebrow}</p>
+      <h2>
+        {
+          content.finalCallToAction.heading.map((line, index) => (
+            <>
+              {line}
+              {index < content.finalCallToAction.heading.length - 1 && <br />}
+            </>
+          ))
+        }
+      </h2>
+      <div class="actions">
+        {
+          content.finalCallToAction.actions.map((action) => (
+            <a class={actionClasses[action.style]} href={action.href}>
+              {action.label}
+            </a>
+          ))
+        }
+      </div>
+    </section>
+    <footer>
+      <a class="wordmark" href={content.brand.href}>
+        {content.brand.name}<small>{content.brand.suffix}</small>
+      </a>
+      <p>{content.footer.tagline}</p>
+      <nav>
+        {
+          content.footer.links.map((item) => (
+            <a href={item.href}>{item.label}</a>
+          ))
+        }
+      </nav>
+    </footer>
+  </body>
+</html>
