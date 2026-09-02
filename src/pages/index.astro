@@ -8,11 +8,14 @@ if (!entry) {
 }
 
 const content = entry.data;
-const actionClasses = {
-  plain: undefined,
-  dark: "pill pill-dark",
-  quiet: "quiet",
-};
+const leftMetrics = content.readout.metrics.filter(
+  (metric) => metric.side === "left",
+);
+const rightMetrics = content.readout.metrics.filter(
+  (metric) => metric.side === "right",
+);
+const socialImage = new URL(content.meta.socialImage, content.meta.canonicalUrl)
+  .href;
 ---
 
 <!doctype html>
@@ -21,15 +24,47 @@ const actionClasses = {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={content.meta.description} />
+    <link rel="canonical" href={content.meta.canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Marres" />
+    <meta property="og:title" content={content.meta.title} />
+    <meta property="og:description" content={content.meta.description} />
+    <meta property="og:url" content={content.meta.canonicalUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={content.meta.socialImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={content.meta.title} />
+    <meta name="twitter:description" content={content.meta.description} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content={content.meta.socialImageAlt} />
+    <link
+      rel="icon"
+      href="/images/marres-mark-square.svg"
+      type="image/svg+xml"
+    />
+    <link rel="preload" as="image" href={content.hero.backgroundImage} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap"
+    />
     <title>{content.meta.title}</title>
   </head>
   <body>
-    <!-- SECTION: NAVIGATION -->
-    <header class="topnav">
-      <a class="wordmark" href={content.brand.href}>
-        {content.brand.name}<small>{content.brand.suffix}</small>
+    <header class="site-header shell">
+      <a class="logo" href={content.brand.href} aria-label={content.brand.name}>
+        <img
+          src={content.brand.logo}
+          alt={content.brand.logoAlt}
+          width="21"
+          height="24"
+        />
+        <span>{content.brand.name}</span>
       </a>
-      <nav aria-label={content.navigation.ariaLabel}>
+      <nav class="site-links" aria-label={content.navigation.ariaLabel}>
         {
           content.navigation.items.map((item) => (
             <a href={item.href}>{item.label}</a>
@@ -37,363 +72,322 @@ const actionClasses = {
         }
       </nav>
       <div class="nav-actions">
-        {
-          content.navigation.actions.map((action) => (
-            <a class={actionClasses[action.style]} href={action.href}>
-              {action.label}
+        <details class="mobile-menu">
+          <summary>Menu</summary>
+          <nav aria-label="Mobile navigation">
+            {
+              content.navigation.items.map((item) => (
+                <a href={item.href}>{item.label}</a>
+              ))
+            }
+            <a href={content.navigation.signIn.href}>
+              {content.navigation.signIn.label}
             </a>
-          ))
-        }
+          </nav>
+        </details>
+        <a class="desktop-sign-in" href={content.navigation.signIn.href}>
+          {content.navigation.signIn.label}
+        </a>
+        <a class="pill" href={content.navigation.action.href}>
+          {content.navigation.action.label}
+        </a>
       </div>
     </header>
 
-    <!-- SECTION: HERO -->
-    <section class="hero" id="top">
-      <div class="hero-copy">
-        <p class="label">{content.hero.eyebrow}</p>
+    <main id="top">
+      <section class="hero shell">
+        <span class="tag">{content.hero.tag}</span>
         <h1>
-          {
-            content.hero.heading.map((line, index) => (
-              <>
-                {line}
-                {index < content.hero.heading.length - 1 && <br />}
-              </>
-            ))
-          }
+          {content.hero.heading}{" "}
+          <span class="fade">{content.hero.fadedHeading}</span>
         </h1>
-        <p>{content.hero.description}</p>
-        <div class="actions">
+        <p class="lede">{content.hero.description}</p>
+        <div
+          class="cosmos"
+          role="img"
+          aria-label={content.hero.ariaLabel}
+          style={`--hero-image: url("${content.hero.backgroundImage}")`}
+        >
+          <div class="orbit orbit-one"></div>
+          <div class="orbit orbit-two"></div>
+          <div class="orbit orbit-three"></div>
+          <i class="node node-one"></i>
+          <i class="node node-two"></i>
+          <i class="node node-three"></i>
+          <i class="node node-four"></i>
+          <span class="core">{content.hero.coreLabel}</span>
           {
-            content.hero.actions.map((action) => (
-              <a class={actionClasses[action.style]} href={action.href}>
-                {action.label}
-              </a>
+            content.hero.orbitLabels.map((label, index) => (
+              <span class={`orbit-label orbit-label-${index + 1}`}>
+                {label}
+              </span>
             ))
           }
         </div>
-      </div>
-      <div class="lenses">
-        {
-          content.capabilities.map((capability) => (
-            <article class="lens" tabindex="0">
-              <div class="mountain">
-                <img src={capability.image} alt={capability.alt} />
-                <span>{capability.number}</span>
-                <small>{capability.hint}</small>
-              </div>
-              <h2>{capability.title}</h2>
-              <p>{capability.description}</p>
-            </article>
-          ))
-        }
-      </div>
-    </section>
+      </section>
 
-    <!-- SECTION: DECISION BRIEF -->
-    <section class="feature soft" id="solutions">
-      <div class="copy">
-        <p class="label">{content.decisionSystem.eyebrow}</p>
-        <h2>
-          {
-            content.decisionSystem.heading.map((line, index) => (
-              <>
-                {line}
-                {index < content.decisionSystem.heading.length - 1 && <br />}
-              </>
-            ))
-          }
-        </h2>
-        <p>{content.decisionSystem.description}</p>
-        <a class="pill pill-dark" href={content.decisionSystem.action.href}>
-          {content.decisionSystem.action.label}
-        </a>
-      </div>
-      <div class="panel brief">
-        <div class="panel-top">
-          <span>{content.decisionSystem.brief.reference}</span>
-          <b>{content.decisionSystem.brief.status}</b>
+      <section class="block shell" id="solutions">
+        <div class="section-head">
+          <span class="tag">{content.readout.tag}</span>
+          <h2>
+            {content.readout.heading}{" "}
+            <span class="fade">{content.readout.fadedHeading}</span>
+          </h2>
+          <p class="lede">{content.readout.description}</p>
         </div>
-        <p class="brief-tag">{content.decisionSystem.brief.category}</p>
-        <h3>{content.decisionSystem.brief.question}</h3>
-        <div class="brief-grid">
-          {
-            content.decisionSystem.brief.indicators.map((indicator) => (
-              <div>
-                <span>{indicator.label}</span>
-                <strong>{indicator.value}</strong>
-              </div>
-            ))
-          }
-        </div>
-        <div class="answer">
-          <span>{content.decisionSystem.brief.answerLabel}</span>
-          <p>{content.decisionSystem.brief.answer}</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION: UNDERSTAND -->
-    <section class="feature" id="workflow">
-      <div class="panel">
-        <div class="panel-top">
-          <span>{content.understand.panel.reference}</span>
-          <b>{content.understand.panel.status}</b>
-        </div>
-        <div class="decision-view">
-          <div class="decision-head">
+        <div class="readout">
+          <div class="metric-stack">
             {
-              content.understand.panel.headers.map((header) => (
-                <span>{header}</span>
+              leftMetrics.map((metric) => (
+                <article class="metric">
+                  <span class="metric-label">{metric.label}</span>
+                  <strong>
+                    {metric.value}{" "}
+                    {metric.suffix && <small>{metric.suffix}</small>}
+                  </strong>
+                  <small>{metric.note}</small>
+                  <div class={`spark spark-${metric.tone}`} />
+                </article>
               ))
             }
           </div>
+          <div class="universe">
+            <img
+              src={content.readout.image}
+              alt={content.readout.imageAlt}
+              width="2048"
+              height="1907"
+              loading="lazy"
+              decoding="async"
+            />
+            <span>{content.readout.imageLabel}</span>
+          </div>
+          <div class="metric-stack">
+            {
+              rightMetrics.map((metric) => (
+                <article class="metric">
+                  <span class="metric-label">{metric.label}</span>
+                  <strong>
+                    {metric.value}{" "}
+                    {metric.suffix && <small>{metric.suffix}</small>}
+                  </strong>
+                  <small>{metric.note}</small>
+                  <div class={`spark spark-${metric.tone}`} />
+                </article>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="method shell" id="method">
+        <div class="method-intro">
+          <div>
+            <span class="tag">{content.method.tag}</span>
+            <h2>{content.method.heading}</h2>
+            <p>{content.method.description}</p>
+          </div>
+          <a class="pill" href={content.method.action.href}>
+            {content.method.action.label}
+          </a>
+        </div>
+        <div class="steps">
           {
-            content.understand.panel.rows.map((row) => (
-              <div class:list={["decision-row", { "is-focus": row.focus }]}>
-                <div class="domain-name">
-                  <b>{row.name}</b>
-                  <small>{row.elasticity}</small>
-                </div>
-                <span class="gap-track" aria-label={row.gapAriaLabel}>
-                  <i style={`width:${row.gapWidth}%`} />
-                  <small class="gap-peer">
-                    {content.understand.panel.peerLabel}
-                  </small>
-                </span>
-                <span
-                  class="opportunity-bar"
-                  aria-label={row.opportunityAriaLabel}
-                >
-                  <i style={`width:${row.directWidth}%`} />
-                  <em style={`width:${row.indirectWidth}%`} />
-                </span>
-                <span class="uplift">
-                  <strong>{row.uplift}</strong>
-                  <small>{row.upliftPeriod}</small>
-                </span>
-              </div>
+            content.method.steps.map((step) => (
+              <article class="step">
+                <span class="step-number">{step.number}</span>
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
+                {step.variant === "decision" && (
+                  <div class="demo">
+                    <div class="demo-head">
+                      <span>{content.method.decisionDemo.header}</span>
+                      <span>{content.method.decisionDemo.status}</span>
+                    </div>
+                    <div class="decision-demo">
+                      <small>{content.method.decisionDemo.label}</small>
+                      <b>{content.method.decisionDemo.question}</b>
+                      <small>{content.method.decisionDemo.detail}</small>
+                    </div>
+                  </div>
+                )}
+                {step.variant === "system" && (
+                  <div class="demo">
+                    <div class="demo-head">
+                      <span>{content.method.systemDemo.header}</span>
+                      <span>{content.method.systemDemo.status}</span>
+                    </div>
+                    <div class="matrix">
+                      {content.method.systemDemo.rows.map((row, rowIndex) => (
+                        <div class={`matrix-row matrix-${row.tone}`}>
+                          <b>{row.label}</b>
+                          {Array.from({ length: 10 }, (_, index) => (
+                            <i
+                              class:list={{
+                                muted: (index + rowIndex) % 5 === 1,
+                              }}
+                            />
+                          ))}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {step.variant === "brief" && (
+                  <div class="demo">
+                    <div class="demo-head">
+                      <span>{content.method.briefDemo.header}</span>
+                      <span>{content.method.briefDemo.status}</span>
+                    </div>
+                    <div class="brief-demo">
+                      <img
+                        src={content.method.briefDemo.image}
+                        alt=""
+                        width="2048"
+                        height="2048"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <div>
+                        <span class="grade">
+                          {content.method.briefDemo.grade}{" "}
+                          <small>{content.method.briefDemo.gradeLabel}</small>
+                        </span>
+                        <div class="grade-line" />
+                        <small>{content.method.briefDemo.recommendation}</small>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </article>
             ))
           }
-          <div class="decision-key">
-            <span
-              ><i class="direct"></i>{content.understand.panel.key.direct}</span
-            >
-            <span
-              ><i class="indirect"></i>{
-                content.understand.panel.key.indirect
-              }</span
-            >
-          </div>
-          <div class="decision-callout">
-            <span>{content.understand.panel.calloutLabel}</span>
-            <p>{content.understand.panel.callout}</p>
-          </div>
-          <small class="decision-note">{content.understand.panel.note}</small>
         </div>
-      </div>
-      <div class="copy">
-        <p class="label">{content.understand.copy.eyebrow}</p>
-        <h2>{content.understand.copy.heading}</h2>
-        <p>{content.understand.copy.description}</p>
-        <ul>
-          {content.understand.copy.points.map((point) => <li>{point}</li>)}
-        </ul>
-      </div>
-    </section>
+      </section>
 
-    <!-- SECTION: EXPLAIN -->
-    <section class="feature soft flip">
-      <div class="copy">
-        <p class="label">{content.explain.copy.eyebrow}</p>
-        <h2>{content.explain.copy.heading}</h2>
-        <p>{content.explain.copy.description}</p>
-        <ul>
-          {content.explain.copy.points.map((point) => <li>{point}</li>)}
-        </ul>
-      </div>
-      <div class="panel mechanism-map">
-        {
-          content.explain.mechanism.nodes.map((node, index) => (
-            <>
-              <div class="node">
-                <small>{node.label}</small>
-                <b>{node.value}</b>
-              </div>
-              {index < content.explain.mechanism.nodes.length - 1 && (
-                <span class="connector">
-                  {content.explain.mechanism.connector}
-                </span>
-              )}
-            </>
-          ))
-        }
-        <div class="assumption">
-          <span>{content.explain.mechanism.assumptionLabel}</span>
-          <p>{content.explain.mechanism.assumption}</p>
+      <section class="trace shell">
+        <div class="section-head">
+          <span class="tag">{content.trace.tag}</span>
+          <h2>
+            {content.trace.heading}{" "}
+            <span class="fade">{content.trace.fadedHeading}</span>
+          </h2>
+          <p class="lede">{content.trace.description}</p>
         </div>
-      </div>
-    </section>
-
-    <!-- SECTION: SIMULATE -->
-    <section class="feature">
-      <div class="panel">
-        <div class="panel-top">
-          <span>{content.simulate.panel.reference}</span>
-          <b>{content.simulate.panel.status}</b>
-        </div>
-        {
-          content.simulate.panel.options.map((option) => (
-            <div class:list={["strategy", { selected: option.selected }]}>
-              <span>{option.label}</span>
-              <div class="bars">
-                {Array.from({ length: 6 }, () => (
-                  <i />
+        <div class="records">
+          {
+            content.trace.records.map((record) => (
+              <article class="record">
+                <b>{record.label}</b>
+                {record.lines.map((line) => (
+                  <div>
+                    <span class={`record-${record.tone}`}>{line.key}:</span>{" "}
+                    {line.value}
+                  </div>
                 ))}
-              </div>
-              <b class="score">{option.score}</b>
-            </div>
-          ))
-        }
-      </div>
-      <div class="copy">
-        <p class="label">{content.simulate.copy.eyebrow}</p>
-        <h2>{content.simulate.copy.heading}</h2>
-        <p>{content.simulate.copy.description}</p>
-        <ul>
-          {content.simulate.copy.points.map((point) => <li>{point}</li>)}
-        </ul>
-      </div>
-    </section>
-
-    <!-- SECTION: CONNECTED WORKFLOW -->
-    <section class="metrics">
-      <div>
-        <p class="label">{content.workflow.eyebrow}</p>
-        <h2>{content.workflow.heading}</h2>
-      </div>
-      {
-        content.workflow.steps.map((step) => (
-          <div class="metric">
-            <strong>{step.number}</strong>
-            <span>{step.label}</span>
-          </div>
-        ))
-      }
-    </section>
-
-    <!-- SECTION: USE CASES -->
-    <section class="questions" id="resources">
-      <p class="label">{content.questions.eyebrow}</p>
-      <h2>
-        {
-          content.questions.heading.map((line, index) => (
-            <>
-              {line}
-              {index < content.questions.heading.length - 1 && <br />}
-            </>
-          ))
-        }
-      </h2>
-      <div class="question-grid">
-        {
-          content.questions.items.map((item) => (
-            <article>
-              <span>{item.category}</span>
-              <h3>{item.question}</h3>
-              <a href={item.href}>{item.actionLabel}</a>
-            </article>
-          ))
-        }
-      </div>
-    </section>
-
-    <!-- SECTION: INDUSTRIES -->
-    <section class="cases">
-      <div class="case-intro">
-        <p class="label">{content.industries.intro.eyebrow}</p>
-        <h2>{content.industries.intro.heading}</h2>
-        <p>{content.industries.intro.description}</p>
-        <a class="pill pill-light" href={content.industries.intro.href}>
-          {content.industries.intro.actionLabel}
-        </a>
-      </div>
-      {
-        content.industries.cases.map((item) => (
-          <article class={`case case-${item.tone}`}>
-            <span>{item.category}</span>
-            <h3>{item.heading}</h3>
-            <p>{item.description}</p>
-          </article>
-        ))
-      }
-    </section>
-
-    <!-- SECTION: PRICING -->
-    <section class="pricing" id="pricing">
-      <div class="pricing-copy">
-        <p class="label">{content.pricing.eyebrow}</p>
-        <h2>
-          {
-            content.pricing.heading.map((line, index) => (
-              <>
-                {line}
-                {index < content.pricing.heading.length - 1 && <br />}
-              </>
+              </article>
             ))
           }
-        </h2>
-        <p>{content.pricing.description}</p>
-      </div>
-      <div class="price-card">
-        <span>{content.pricing.plan.name}</span>
-        <div>
-          <strong>{content.pricing.plan.price}</strong>
-          <small>{content.pricing.plan.period}</small>
         </div>
-        <ul>
-          {content.pricing.plan.features.map((feature) => <li>{feature}</li>)}
-        </ul>
-        <a class="pill pill-dark" href={content.pricing.plan.href}>
-          {content.pricing.plan.actionLabel}
-        </a>
-      </div>
-    </section>
+        <div class="benefits">
+          {
+            content.trace.benefits.map((benefit) => (
+              <article>
+                <h3>{benefit.title}</h3>
+                <p>{benefit.description}</p>
+              </article>
+            ))
+          }
+        </div>
+      </section>
 
-    <!-- SECTION: FINAL CTA -->
-    <section class="final">
-      <p class="label">{content.finalCallToAction.eyebrow}</p>
-      <h2>
+      <section class="pricing shell" id="pricing">
+        <div class="section-head">
+          <span class="tag">{content.pricing.tag}</span>
+          <h2>
+            {content.pricing.heading}{" "}
+            <span class="fade">{content.pricing.fadedHeading}</span>
+          </h2>
+          <p class="lede">{content.pricing.description}</p>
+        </div>
+        <div class="plans">
+          {
+            content.pricing.plans.map((plan) => (
+              <article class:list={["plan", { featured: plan.featured }]}>
+                <span class="tag">{plan.badge}</span>
+                <h3>{plan.name}</h3>
+                <div class="price">
+                  {plan.price} <small>{plan.period}</small>
+                </div>
+                {plan.actionLabel && plan.href && (
+                  <a
+                    class:list={["pill", { dark: plan.featured }]}
+                    href={plan.href}
+                  >
+                    {plan.actionLabel}
+                  </a>
+                )}
+                <ul>
+                  {plan.features.map((feature) => (
+                    <li>{feature}</li>
+                  ))}
+                </ul>
+              </article>
+            ))
+          }
+        </div>
+        <div class="assurances">
+          {
+            content.pricing.assurances.map((assurance) => (
+              <span>{assurance}</span>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="block shell continuity">
+        <div class="section-head">
+          <span class="tag">{content.continuity.tag}</span>
+          <h2>
+            {content.continuity.heading}{" "}
+            <span class="fade">{content.continuity.fadedHeading}</span>
+          </h2>
+          <p class="lede">{content.continuity.description}</p>
+        </div>
+        <div class="continuity-cards">
+          {
+            content.continuity.cards.map((card) => (
+              <article>
+                <div class="demo-head">
+                  <span>{card.label}</span>
+                  <span>{card.status}</span>
+                </div>
+                <h3>{card.title}</h3>
+                <p>{card.description}</p>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer shell">
+      <div class="footer-grid">
+        <div>
+          <h2>{content.footer.heading}</h2>
+          <p>{content.footer.description}</p>
+        </div>
         {
-          content.finalCallToAction.heading.map((line, index) => (
-            <>
-              {line}
-              {index < content.finalCallToAction.heading.length - 1 && <br />}
-            </>
-          ))
-        }
-      </h2>
-      <div class="actions">
-        {
-          content.finalCallToAction.actions.map((action) => (
-            <a class={actionClasses[action.style]} href={action.href}>
-              {action.label}
-            </a>
+          content.footer.columns.map((column) => (
+            <nav aria-label={column.heading}>
+              <h2>{column.heading}</h2>
+              {column.links.map((item) => (
+                <a href={item.href}>{item.label}</a>
+              ))}
+            </nav>
           ))
         }
       </div>
-    </section>
-    <footer>
-      <a class="wordmark" href={content.brand.href}>
-        {content.brand.name}<small>{content.brand.suffix}</small>
-      </a>
-      <p>{content.footer.tagline}</p>
-      <nav>
-        {
-          content.footer.links.map((item) => (
-            <a href={item.href}>{item.label}</a>
-          ))
-        }
-      </nav>
     </footer>
   </body>
 </html>
