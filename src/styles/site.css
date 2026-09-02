@@ -47,7 +47,8 @@ button {
 }
 
 a:focus-visible,
-button:focus-visible {
+button:focus-visible,
+summary:focus-visible {
   border-radius: 0.25rem;
   outline: 2px solid var(--blue);
   outline-offset: 4px;
@@ -111,6 +112,46 @@ main section {
 
 .nav-actions {
   justify-content: flex-end;
+}
+
+.mobile-menu {
+  position: relative;
+  display: none;
+}
+
+.mobile-menu summary {
+  padding: 0.5rem;
+  cursor: pointer;
+  font-weight: 700;
+  list-style: none;
+}
+
+.mobile-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+.mobile-menu nav {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  right: 0;
+  display: grid;
+  width: min(16rem, calc(100vw - 40px));
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  background: #0d0f11;
+  box-shadow: 0 1rem 3rem rgb(0 0 0 / 45%);
+  gap: 0.25rem;
+}
+
+.mobile-menu nav a {
+  padding: 0.75rem;
+  border-radius: 0.4rem;
+}
+
+.mobile-menu nav a:hover {
+  background: #171a1d;
+  color: var(--blue);
 }
 
 .site-links a:hover,
@@ -754,14 +795,14 @@ main section {
 }
 
 .footer {
-  padding: 85px 48px 0;
+  padding: 85px 48px;
 }
 
 .footer-grid {
   display: grid;
   color: #777d82;
   gap: 40px;
-  grid-template-columns: 2fr repeat(3, 1fr);
+  grid-template-columns: 2fr 1fr;
 }
 
 .footer h2 {
@@ -775,26 +816,31 @@ main section {
   margin: 18px 0;
 }
 
-.footer-wordmark {
-  margin-top: 65px;
-  background: linear-gradient(90deg, #f4f5f5, #b5c6cd);
-  background-clip: text;
-  color: transparent;
-  font-size: clamp(90px, 20vw, 290px);
-  font-weight: 700;
-  letter-spacing: -0.08em;
-  line-height: 0.85;
-  text-align: center;
-}
-
 @media (max-width: 900px) {
   .site-header {
     padding: 0 20px;
     grid-template-columns: 1fr auto;
   }
 
-  .site-links {
+  .site-links,
+  .desktop-sign-in {
     display: none;
+  }
+
+  .mobile-menu {
+    display: block;
+  }
+
+  .mobile-menu nav {
+    position: fixed;
+    top: 78px;
+    right: 20px;
+    left: 20px;
+    width: auto;
+  }
+
+  .nav-actions {
+    gap: 0.75rem;
   }
 
   .readout,
@@ -842,16 +888,17 @@ main section {
     scroll-margin-top: 66px;
   }
 
+  .mobile-menu nav {
+    top: 66px;
+  }
+
   .logo span {
     font-size: 18px;
   }
 
-  .nav-actions > a:first-child {
-    display: none;
-  }
-
   .pill {
-    padding: 0 16px;
+    padding: 0 12px;
+    font-size: 14px;
   }
 
   .hero {

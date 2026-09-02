@@ -14,6 +14,8 @@ const leftMetrics = content.readout.metrics.filter(
 const rightMetrics = content.readout.metrics.filter(
   (metric) => metric.side === "right",
 );
+const socialImage = new URL(content.meta.socialImage, content.meta.canonicalUrl)
+  .href;
 ---
 
 <!doctype html>
@@ -22,6 +24,21 @@ const rightMetrics = content.readout.metrics.filter(
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={content.meta.description} />
+    <link rel="canonical" href={content.meta.canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Marres" />
+    <meta property="og:title" content={content.meta.title} />
+    <meta property="og:description" content={content.meta.description} />
+    <meta property="og:url" content={content.meta.canonicalUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={content.meta.socialImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={content.meta.title} />
+    <meta name="twitter:description" content={content.meta.description} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content={content.meta.socialImageAlt} />
     <link
       rel="icon"
       href="/images/marres-mark-square.svg"
@@ -55,7 +72,20 @@ const rightMetrics = content.readout.metrics.filter(
         }
       </nav>
       <div class="nav-actions">
-        <a href={content.navigation.signIn.href}>
+        <details class="mobile-menu">
+          <summary>Menu</summary>
+          <nav aria-label="Mobile navigation">
+            {
+              content.navigation.items.map((item) => (
+                <a href={item.href}>{item.label}</a>
+              ))
+            }
+            <a href={content.navigation.signIn.href}>
+              {content.navigation.signIn.label}
+            </a>
+          </nav>
+        </details>
+        <a class="desktop-sign-in" href={content.navigation.signIn.href}>
           {content.navigation.signIn.label}
         </a>
         <a class="pill" href={content.navigation.action.href}>
@@ -289,12 +319,14 @@ const rightMetrics = content.readout.metrics.filter(
                 <div class="price">
                   {plan.price} <small>{plan.period}</small>
                 </div>
-                <a
-                  class:list={["pill", { dark: plan.featured }]}
-                  href={plan.href}
-                >
-                  {plan.actionLabel}
-                </a>
+                {plan.actionLabel && plan.href && (
+                  <a
+                    class:list={["pill", { dark: plan.featured }]}
+                    href={plan.href}
+                  >
+                    {plan.actionLabel}
+                  </a>
+                )}
                 <ul>
                   {plan.features.map((feature) => (
                     <li>{feature}</li>
@@ -356,7 +388,6 @@ const rightMetrics = content.readout.metrics.filter(
           ))
         }
       </div>
-      <div class="footer-wordmark">{content.footer.wordmark}</div>
     </footer>
   </body>
 </html>

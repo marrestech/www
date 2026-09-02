@@ -19,7 +19,14 @@ const home = defineCollection({
   schema: z
     .object({
       meta: z
-        .object({ language: text, description: text, title: text })
+        .object({
+          language: text,
+          description: text,
+          title: text,
+          canonicalUrl: z.url(),
+          socialImage: text,
+          socialImageAlt: text,
+        })
         .strict(),
       brand: z
         .object({ name: text, href: text, logo: text, logoAlt: optionalText })
@@ -159,12 +166,16 @@ const home = defineCollection({
                   name: text,
                   price: text,
                   period: text,
-                  actionLabel: text,
-                  href: text,
+                  actionLabel: text.optional(),
+                  href: text.optional(),
                   featured: z.boolean(),
                   features: z.array(text).min(1),
                 })
-                .strict(),
+                .strict()
+                .refine(
+                  (plan) => Boolean(plan.actionLabel) === Boolean(plan.href),
+                  "A pricing action needs both a label and a destination",
+                ),
             )
             .length(3)
             .refine(
@@ -196,8 +207,7 @@ const home = defineCollection({
           description: text,
           columns: z
             .array(z.object({ heading: text, links: z.array(link) }).strict())
-            .length(3),
-          wordmark: text,
+            .length(1),
         })
         .strict(),
     })

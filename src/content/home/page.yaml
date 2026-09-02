@@ -2,8 +2,11 @@ meta:
   language: en
   description: Marres maps the business, market, and competitors around a decision so growing businesses can test a move before committing capital.
   title: Marres — Test the decision before you commit
+  canonicalUrl: https://marres.io/
+  socialImage: /images/marres-social.png
+  socialImageAlt: The Marres mark on a black background
 brand:
-  name: MARRES/
+  name: MARRES
   href: "#top"
   logo: /images/marres-mark.svg
   logoAlt: ""
@@ -18,10 +21,10 @@ navigation:
       href: "#pricing"
   signIn:
     label: Sign in
-    href: "#"
+    href: https://app.marres.io/login
   action:
     label: Test a decision
-    href: "#method"
+    href: https://app.marres.io/register
 hero:
   tag: Decision intelligence for growing businesses
   heading: Map the universe around your decision,
@@ -74,7 +77,7 @@ method:
   description: From a business question to a defensible next move.
   action:
     label: Start a project
-    href: "#pricing"
+    href: https://app.marres.io/register
   steps:
     - number: "1"
       title: Frame the decision
@@ -164,7 +167,7 @@ pricing:
       price: S$20
       period: / month
       actionLabel: Get started
-      href: "#"
+      href: https://app.marres.io/register
       featured: true
       features:
         - Manual business and market inputs
@@ -176,7 +179,7 @@ pricing:
       price: S$99
       period: / month
       actionLabel: Get started
-      href: "#"
+      href: https://app.marres.io/register
       featured: false
       features:
         - Automated market evidence allowance
@@ -187,8 +190,6 @@ pricing:
       name: PRO
       price: S$499
       period: / month
-      actionLabel: Talk to us
-      href: "#"
       featured: false
       features:
         - Higher research allowance
@@ -218,25 +219,12 @@ continuity:
       title: Return to what changed
       description: Reopen the decision against its original evidence, assumptions and approvals.
 footer:
-  heading: MARRES INSIGHTS /
+  heading: MARRES
   description: Decision intelligence for small and growing businesses.
   columns:
-    - heading: PRODUCT /
+    - heading: PRODUCT
       links:
         - label: Solutions
           href: "#solutions"
         - label: How it works
           href: "#method"
-    - heading: COMPANY /
-      links:
-        - label: Research
-          href: "#"
-        - label: Contact
-          href: "#"
-    - heading: LEGAL /
-      links:
-        - label: Privacy
-          href: "#"
-        - label: Terms
-          href: "#"
-  wordmark: MARRES
