@@ -158,39 +158,7 @@ const home = defineCollection({
         .strict(),
       pricing: splitHeading
         .extend({
-          plans: z
-            .array(
-              z
-                .object({
-                  badge: text,
-                  name: text,
-                  price: text,
-                  period: text,
-                  actionLabel: text.optional(),
-                  href: text.optional(),
-                  featured: z.boolean(),
-                  features: z
-                    .array(
-                      z
-                        .object({
-                          label: text,
-                          status: z.literal("Coming soon!").optional(),
-                        })
-                        .strict(),
-                    )
-                    .min(1),
-                })
-                .strict()
-                .refine(
-                  (plan) => Boolean(plan.actionLabel) === Boolean(plan.href),
-                  "A pricing action needs both a label and a destination",
-                ),
-            )
-            .length(1)
-            .refine(
-              (plans) => plans[0].featured,
-              "The pricing plan must be featured",
-            ),
+          action: link,
           assurances: z.array(text).length(3),
         })
         .strict(),
