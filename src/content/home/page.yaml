@@ -162,40 +162,18 @@ pricing:
   fadedHeading: within reach.
   description: Built for businesses too small for enterprise platforms—and making decisions too important to leave untested.
   plans:
-    - badge: Core
-      name: CORE
-      price: S$20
+    - badge: Monthly
+      name: LAUNCH
+      price: S$99
       period: / month
       actionLabel: Get started
       href: https://app.marres.io/register
       featured: true
       features:
-        - Manual business and market inputs
-        - Up to 3 projects
-        - Saved decision history
-        - 1 account
-    - badge: Recommended
-      name: BUSINESS
-      price: S$99
-      period: / month
-      actionLabel: Get started
-      href: https://app.marres.io/register
-      featured: false
-      features:
-        - Automated market evidence allowance
-        - Up to 3 projects
-        - Monitor up to 3 competitors
-        - 1 account
-    - badge: Teams
-      name: PRO
-      price: S$499
-      period: / month
-      featured: false
-      features:
-        - Higher research allowance
-        - Up to 15 projects
-        - Monitor up to 15 competitors
-        - Up to 5 accounts
+        - label: Up to 5,000 sources per company for one target and six competitors
+        - label: Four Decision Panel decisions per month
+        - label: Weekly Marres Brief
+          status: Coming soon!
   assurances:
     - Cancel anytime. No lock-in.
     - Research usage remains transparent.
@@ -228,3 +206,16 @@ footer:
           href: "#solutions"
         - label: How it works
           href: "#method"
+  legalName: Marres Insights Pte Ltd
+  uen: UEN 202604012K
+  location: Singapore
+  email: founders@marres.io
+  publicLinks:
+    - label: Contact
+      href: /contact
+    - label: Privacy
+      href: /privacy
+    - label: Terms
+      href: /terms
+    - label: Security
+      href: /security

@@ -67,5 +67,6 @@ Use the other site commands as needed:
 format
 check
 build
+test-site
 preview
 ```

@@ -1,0 +1,165 @@
+---
+import { getEntry } from "astro:content";
+import "../styles/site.css";
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalUrl: string;
+  isHome?: boolean;
+}
+
+const { title, description, canonicalUrl, isHome = false } = Astro.props;
+const entry = await getEntry("home", "page");
+if (!entry) {
+  throw new Error("Missing home page content");
+}
+
+const content = entry.data;
+const socialImage = new URL(content.meta.socialImage, content.meta.canonicalUrl)
+  .href;
+const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+const sectionHref = (href: string) =>
+  isHome || !href.startsWith("#") ? href : `/${href}`;
+const organizationJson = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: content.footer.legalName,
+  url: "https://marres.io/",
+  logo: "https://marres.io/images/marres-mark-square.svg",
+  email: content.footer.email,
+  identifier: content.footer.uen,
+});
+---
+
+<!doctype html>
+<html lang={content.meta.language}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Marres" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={content.meta.socialImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content={content.meta.socialImageAlt} />
+    <script type="application/ld+json" is:inline set:html={organizationJson} />
+    <link
+      rel="icon"
+      href="/images/marres-mark-square.svg"
+      type="image/svg+xml"
+    />
+    {
+      isHome && (
+        <link rel="preload" as="image" href={content.hero.backgroundImage} />
+      )
+    }
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap"
+    />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header shell">
+      <a
+        class="logo"
+        href={isHome ? content.brand.href : "/"}
+        aria-label={content.brand.name}
+      >
+        <img
+          src={content.brand.logo}
+          alt={content.brand.logoAlt}
+          width="21"
+          height="24"
+        />
+        <span>{content.brand.name}</span>
+      </a>
+      <nav class="site-links" aria-label={content.navigation.ariaLabel}>
+        {
+          content.navigation.items.map((item) => (
+            <a href={sectionHref(item.href)}>{item.label}</a>
+          ))
+        }
+      </nav>
+      <div class="nav-actions">
+        <details class="mobile-menu">
+          <summary>Menu</summary>
+          <nav aria-label="Mobile navigation">
+            {
+              content.navigation.items.map((item) => (
+                <a href={sectionHref(item.href)}>{item.label}</a>
+              ))
+            }
+            <a href={content.navigation.signIn.href}>
+              {content.navigation.signIn.label}
+            </a>
+          </nav>
+        </details>
+        <a class="desktop-sign-in" href={content.navigation.signIn.href}>
+          {content.navigation.signIn.label}
+        </a>
+        <a class="pill" href={content.navigation.action.href}>
+          {content.navigation.action.label}
+        </a>
+      </div>
+    </header>
+
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+
+    <footer class="footer shell">
+      <div class="footer-grid">
+        <div class="footer-summary">
+          <h2>{content.footer.heading}</h2>
+          <p>{content.footer.description}</p>
+        </div>
+        {
+          content.footer.columns.map((column) => (
+            <nav class="footer-product" aria-label={column.heading}>
+              <h2>{column.heading}</h2>
+              {column.links.map((item) => (
+                <a href={sectionHref(item.href)}>{item.label}</a>
+              ))}
+            </nav>
+          ))
+        }
+        <div class="footer-company">
+          <div class="footer-identity">
+            <strong>{content.footer.legalName}</strong>
+            <span>{content.footer.uen}</span>
+            <span>{content.footer.location}</span>
+            <a href={`mailto:${content.footer.email}`}>{content.footer.email}</a
+            >
+          </div>
+          <nav class="footer-links" aria-label="Company and legal">
+            {
+              content.footer.publicLinks.map((item) => (
+                <a
+                  href={item.href}
+                  aria-current={currentPath === item.href ? "page" : undefined}
+                >
+                  {item.label}
+                </a>
+              ))
+            }
+          </nav>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

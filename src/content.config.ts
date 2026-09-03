@@ -169,7 +169,16 @@ const home = defineCollection({
                   actionLabel: text.optional(),
                   href: text.optional(),
                   featured: z.boolean(),
-                  features: z.array(text).min(1),
+                  features: z
+                    .array(
+                      z
+                        .object({
+                          label: text,
+                          status: z.literal("Coming soon!").optional(),
+                        })
+                        .strict(),
+                    )
+                    .min(1),
                 })
                 .strict()
                 .refine(
@@ -177,10 +186,10 @@ const home = defineCollection({
                   "A pricing action needs both a label and a destination",
                 ),
             )
-            .length(3)
+            .length(1)
             .refine(
-              (plans) => plans.filter((plan) => plan.featured).length === 1,
-              "Pricing must have one featured plan",
+              (plans) => plans[0].featured,
+              "The pricing plan must be featured",
             ),
           assurances: z.array(text).length(3),
         })
@@ -208,6 +217,11 @@ const home = defineCollection({
           columns: z
             .array(z.object({ heading: text, links: z.array(link) }).strict())
             .length(1),
+          legalName: text,
+          uen: text,
+          location: text,
+          email: text,
+          publicLinks: z.array(link).length(4),
         })
         .strict(),
     })

@@ -14,6 +14,7 @@
     "format:check": "prettier --check .",
     "check": "astro check",
     "build": "astro build",
+    "test": "node --test tests/site.test.mjs",
     "preview": "astro preview"
   },
   "devDependencies": {
