@@ -1,6 +1,13 @@
 ---
+import { getEntry } from "astro:content";
 import SiteLayout from "../layouts/SiteLayout.astro";
 
+const entry = await getEntry("home", "page");
+if (!entry) {
+  throw new Error("Missing home page content");
+}
+
+const email = entry.data.footer.email;
 const meta = {
   title: "Security at Marres | Marres",
   description:
@@ -94,11 +101,9 @@ const meta = {
       <section>
         <h2>Report a concern</h2>
         <p>
-          Email <a href="mailto:marresinsights@gmail.com"
-            >marresinsights@gmail.com</a
-          > with a security concern. Include the affected page, what you observed,
-          and how we can contact you. Do not send passwords, payment details, private
-          keys, or other secrets by email.
+          Email <a href={`mailto:${email}`}>{email}</a> with a security concern. Include
+          the affected page, what you observed, and how we can contact you. Do not
+          send passwords, payment details, private keys, or other secrets by email.
         </p>
       </section>
     </div>

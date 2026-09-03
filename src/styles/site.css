@@ -737,9 +737,10 @@ main section {
 
 .plans {
   display: grid;
+  max-width: 680px;
+  margin-inline: auto;
   padding: 0 18px;
-  gap: 18px;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
 }
 
 .plan {
@@ -796,8 +797,34 @@ main section {
 
 .plan li::before {
   margin-right: 0.4rem;
-  color: var(--mint);
+  color: #087251;
   content: "✓";
+}
+
+.plan li.coming-soon-feature {
+  display: flex;
+  gap: 0.55rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.plan li.coming-soon-feature::before {
+  content: none;
+}
+
+.coming-soon {
+  display: inline-flex;
+  min-height: 1.5rem;
+  padding: 0.15rem 0.55rem;
+  border: 1px solid #765400;
+  border-radius: 999px;
+  align-items: center;
+  background: #ffdc62;
+  color: #211800;
+  font-size: 0.7rem;
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .assurances {

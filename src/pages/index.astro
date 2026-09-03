@@ -252,7 +252,15 @@ const rightMetrics = content.readout.metrics.filter(
             )}
             <ul>
               {plan.features.map((feature) => (
-                <li>{feature}</li>
+                <li class:list={{ "coming-soon-feature": feature.status }}>
+                  <span>{feature.label}</span>
+                  {feature.status && (
+                    <>
+                      {" "}
+                      <span class="coming-soon">{feature.status}</span>
+                    </>
+                  )}
+                </li>
               ))}
             </ul>
           </article>

@@ -1,6 +1,13 @@
 ---
+import { getEntry } from "astro:content";
 import SiteLayout from "../layouts/SiteLayout.astro";
 
+const entry = await getEntry("home", "page");
+if (!entry) {
+  throw new Error("Missing home page content");
+}
+
+const email = entry.data.footer.email;
 const meta = {
   title: "Contact Marres | Marres",
   description:
@@ -32,8 +39,8 @@ const meta = {
           <dd>Singapore</dd>
         </div>
       </dl>
-      <a class="pill contact-action" href="mailto:marresinsights@gmail.com">
-        Email marresinsights@gmail.com
+      <a class="pill contact-action" href={`mailto:${email}`}>
+        Email {email}
       </a>
     </div>
   </section>

@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { glob, readFile } from "node:fs/promises";
 import { createServer } from "node:http";
 import { after, before, test } from "node:test";
 
@@ -92,7 +92,7 @@ const organization = {
   name: "Marres Insights Pte Ltd",
   url: "https://marres.io/",
   logo: "https://marres.io/images/marres-mark-square.svg",
-  email: "marresinsights@gmail.com",
+  email: "founders@marres.io",
   identifier: "UEN 202604012K",
 };
 
@@ -101,6 +101,17 @@ const htmlByPath = new Map();
 for (const route of routes) {
   htmlByPath.set(route.path, await readFile(route.file, "utf8"));
 }
+
+const sourceFiles = [];
+for (const pattern of ["src/**/*.*", "tests/**/*.*"]) {
+  for await (const file of glob(pattern)) {
+    sourceFiles.push(file);
+  }
+}
+const sourceText = (
+  await Promise.all(sourceFiles.map((file) => readFile(file, "utf8")))
+).join("\n");
+const builtHtml = [...htmlByPath.values()].join("\n");
 
 function escaped(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -209,7 +220,7 @@ test("every page has one main landmark, a skip target, and the shared footer", (
     assert.match(html, /Marres Insights Pte Ltd/);
     assert.match(html, /UEN 202604012K/);
     assert.match(html, />Singapore</);
-    assert.match(html, /mailto:marresinsights@gmail\.com/);
+    assert.match(html, /mailto:founders@marres\.io/);
     for (const link of ["/contact", "/privacy", "/terms", "/security"]) {
       assert.match(html, new RegExp(`href=["']${escaped(link)}["']`));
     }
@@ -243,7 +254,66 @@ test("contact page provides the approved business facts and mail action", () => 
   assert.match(html, /Marres Insights Pte Ltd/);
   assert.match(html, /UEN 202604012K/);
   assert.match(html, />Singapore</);
-  assert.match(html, /href=["']mailto:marresinsights@gmail\.com["']/);
+  assert.match(html, /href=["']mailto:founders@marres\.io["']/);
+});
+
+test("public email is current in source, links, and built output", () => {
+  const retiredEmail = ["marresinsights", "gmail.com"].join("@");
+
+  assert.ok(!sourceText.includes(retiredEmail));
+  assert.ok(!builtHtml.includes(retiredEmail));
+  for (const route of routes) {
+    const html = htmlByPath.get(route.path);
+    assert.match(html, /mailto:founders@marres\.io/);
+    assert.match(html, />founders@marres\.io</);
+  }
+});
+
+test("pricing has one exact launch tier and marks the Brief unavailable", () => {
+  const home = htmlByPath.get("/");
+  const plans = [
+    ...home.matchAll(/<article[^>]*class=["'][^"']*\bplan\b[^"']*["']/gi),
+  ];
+  assert.equal(plans.length, 1);
+  assert.match(home, /<h3>LAUNCH<\/h3>/);
+  assert.equal(home.match(/S\$99/g)?.length, 1);
+  assert.match(
+    home,
+    /<div class=["']price["']>\s*S\$99\s*<small>\/ month<\/small>\s*<\/div>/,
+  );
+  assert.match(
+    home,
+    /Up to 5,000 sources per company for one target and six competitors/,
+  );
+  assert.match(home, /Four Decision Panel decisions per month/);
+
+  const briefFeature = home.match(
+    /<li[^>]*class=["'][^"']*coming-soon-feature[^"']*["'][^>]*>([\s\S]*?)<\/li>/i,
+  )?.[1];
+  assert.ok(briefFeature, "coming-soon Brief feature exists");
+  assert.match(briefFeature, /<span>Weekly Marres Brief<\/span>/);
+  assert.match(
+    briefFeature,
+    /<span class=["']coming-soon["']>Coming soon!<\/span>/,
+  );
+  assert.equal(home.match(/Coming soon!/g)?.length, 1);
+
+  assert.doesNotMatch(home, /S\$(?:20|499)\s*<small>\/ month<\/small>/);
+  for (const retiredCopy of [
+    ">CORE<",
+    ">BUSINESS<",
+    ">PRO<",
+    "Up to 3 projects",
+    "Monitor up to 3 competitors",
+    "Up to 15 projects",
+    "Monitor up to 15 competitors",
+    "Up to 5 accounts",
+  ]) {
+    assert.ok(
+      !home.includes(retiredCopy),
+      `retired pricing copy: ${retiredCopy}`,
+    );
+  }
 });
 
 test("organization JSON-LD parses and contains only approved fields", () => {

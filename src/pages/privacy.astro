@@ -1,6 +1,13 @@
 ---
+import { getEntry } from "astro:content";
 import SiteLayout from "../layouts/SiteLayout.astro";
 
+const entry = await getEntry("home", "page");
+if (!entry) {
+  throw new Error("Missing home page content");
+}
+
+const email = entry.data.footer.email;
 const meta = {
   title: "Privacy Policy | Marres",
   description:
@@ -114,10 +121,9 @@ const meta = {
         <h2>Access, correction, and deletion</h2>
         <p>
           Marres does not yet have self-service data export or account deletion.
-          Email <a href="mailto:marresinsights@gmail.com"
-            >marresinsights@gmail.com</a
-          > to ask for access, correction, export, or deletion. We may need to verify
-          that you control the account before responding.
+          Email <a href={`mailto:${email}`}>{email}</a> to ask for access, correction,
+          export, or deletion. We may need to verify that you control the account
+          before responding.
         </p>
       </section>
 
@@ -135,11 +141,9 @@ const meta = {
       <section>
         <h2>Contact and changes</h2>
         <p>
-          Contact <a href="mailto:marresinsights@gmail.com"
-            >marresinsights@gmail.com</a
-          > with a privacy question or request. We may update this policy when the
-          service or its data handling changes. The effective date above shows the
-          current version.
+          Contact <a href={`mailto:${email}`}>{email}</a> with a privacy question
+          or request. We may update this policy when the service or its data handling
+          changes. The effective date above shows the current version.
         </p>
       </section>
     </div>

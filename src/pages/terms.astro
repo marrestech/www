@@ -1,6 +1,13 @@
 ---
+import { getEntry } from "astro:content";
 import SiteLayout from "../layouts/SiteLayout.astro";
 
+const entry = await getEntry("home", "page");
+if (!entry) {
+  throw new Error("Missing home page content");
+}
+
+const email = entry.data.footer.email;
 const meta = {
   title: "Terms of Service | Marres",
   description:
@@ -156,9 +163,8 @@ const meta = {
           terms or the service.
         </p>
         <p>
-          Contact <a href="mailto:marresinsights@gmail.com"
-            >marresinsights@gmail.com</a
-          > with a question about these terms.
+          Contact <a href={`mailto:${email}`}>{email}</a> with a question about these
+          terms.
         </p>
       </section>
     </div>
