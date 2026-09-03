@@ -1,0 +1,147 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+
+const meta = {
+  title: "Privacy Policy | Marres",
+  description:
+    "Read how Marres handles account, billing, company, Google review, analysis, and provider data for its launch service.",
+  canonicalUrl: "https://marres.io/privacy",
+};
+---
+
+<SiteLayout {...meta}>
+  <article class="legal-page">
+    <div class="legal-content">
+      <span class="tag">Legal</span>
+      <h1>Privacy policy</h1>
+      <p class="legal-date">Effective 3 September 2026</p>
+      <p class="legal-intro">
+        This policy explains how Marres Insights Pte Ltd handles data for the
+        Marres launch service and this website.
+      </p>
+
+      <section>
+        <h2>Data we handle</h2>
+        <h3>Accounts and access</h3>
+        <p>
+          We store your email address, password hash, user and tenant records,
+          membership role, and server-side session data. We do not store your
+          password in plain text.
+        </p>
+        <h3>Billing</h3>
+        <p>
+          When billing is enabled, we store Stripe customer, subscription,
+          price, checkout, entitlement, and webhook records. Stripe handles the
+          hosted payment and billing pages. Marres does not store payment-card
+          details.
+        </p>
+        <h3>Company setup</h3>
+        <p>
+          You submit one target company and six competitors, with an exact
+          Google Maps URL for each. You also select four customer-perception
+          domains. We store the submitted names, URLs, selected domains, and the
+          source identities confirmed during collection.
+        </p>
+        <h3>Reviews and analysis</h3>
+        <p>
+          We store public Google Maps review identifiers, text when available,
+          ratings, publication dates, review URLs, and collection details. We
+          also store exact evidence excerpts, scores, embeddings, derived
+          results, run state, failures, usage, cost, and provider, model,
+          prompt, and version records.
+        </p>
+        <p>
+          Apify is configured not to collect reviewer personal data. The Marres
+          review record does not include reviewer names or reviewer profiles.
+          Public review text can still contain personal information that a
+          reviewer chose to publish.
+        </p>
+      </section>
+
+      <section>
+        <h2>Why we use it</h2>
+        <p>We use this data to:</p>
+        <ul>
+          <li>create accounts, sessions, tenant access, and billing access;</li>
+          <li>collect the requested public reviews;</li>
+          <li>produce and display customer-perception analysis;</li>
+          <li>
+            keep results linked to their source and processing record; and
+          </li>
+          <li>secure, operate, support, and diagnose the service.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Who receives data</h2>
+        <p>
+          Apify receives the submitted Google Maps URLs and collects the public
+          review source data. OpenRouter receives review text, company context,
+          and one selected domain for each Luna analysis call. It receives
+          validated evidence excerpts for embedding calls. Both OpenRouter
+          routes are pinned to OpenAI models without provider fallback.
+        </p>
+        <p>
+          Stripe receives account and billing data needed for its hosted
+          checkout and billing pages, then sends Marres subscription and payment
+          state. We use service providers only to run these parts of Marres or
+          when disclosure is required by law.
+        </p>
+        <p>
+          The public website is hosted on GitHub Pages and loads typefaces from
+          Google Fonts. It has no contact form or analytics. Normal web requests
+          can give these hosts technical data such as your IP address and
+          browser details.
+        </p>
+      </section>
+
+      <section>
+        <h2>Hosting and location</h2>
+        <p>
+          At the date of this policy, the pre-launch application and PostgreSQL
+          database run on a Vultr virtual machine. The application uses a local
+          interface, and PostgreSQL uses a private local socket. The public app
+          cutover is not complete.
+        </p>
+        <p>
+          Our providers can process data outside Singapore. We do not make a
+          data-residency promise. We will update this policy if the production
+          data boundary changes.
+        </p>
+      </section>
+
+      <section>
+        <h2>Access, correction, and deletion</h2>
+        <p>
+          Marres does not yet have self-service data export or account deletion.
+          Email <a href="mailto:marresinsights@gmail.com"
+            >marresinsights@gmail.com</a
+          > to ask for access, correction, export, or deletion. We may need to verify
+          that you control the account before responding.
+        </p>
+      </section>
+
+      <section>
+        <h2>Retention</h2>
+        <p>
+          We have not adopted fixed public retention periods. We keep account,
+          analysis, provider, security, and billing records while needed to run
+          and protect the service, support billing, resolve disputes, or meet
+          legal duties. Some billing, security, backup, or legal records can
+          remain when removal is not permitted or practical.
+        </p>
+      </section>
+
+      <section>
+        <h2>Contact and changes</h2>
+        <p>
+          Contact <a href="mailto:marresinsights@gmail.com"
+            >marresinsights@gmail.com</a
+          > with a privacy question or request. We may update this policy when the
+          service or its data handling changes. The effective date above shows the
+          current version.
+        </p>
+      </section>
+    </div>
+  </article>
+</SiteLayout>

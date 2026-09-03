@@ -1,0 +1,40 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+
+const meta = {
+  title: "Contact Marres | Marres",
+  description:
+    "Contact Marres Insights Pte Ltd in Singapore about the Marres service, account access, privacy, terms, or security.",
+  canonicalUrl: "https://marres.io/contact",
+};
+---
+
+<SiteLayout {...meta}>
+  <section class="legal-page contact-page">
+    <div class="legal-content">
+      <span class="tag">Company contact</span>
+      <h1>Contact</h1>
+      <p class="legal-intro">
+        Contact Marres about the service, your account, privacy, terms, or a
+        security concern.
+      </p>
+      <dl class="contact-details">
+        <div>
+          <dt>Legal name</dt>
+          <dd>Marres Insights Pte Ltd</dd>
+        </div>
+        <div>
+          <dt>UEN</dt>
+          <dd>202604012K</dd>
+        </div>
+        <div>
+          <dt>Location</dt>
+          <dd>Singapore</dd>
+        </div>
+      </dl>
+      <a class="pill contact-action" href="mailto:marresinsights@gmail.com">
+        Email marresinsights@gmail.com
+      </a>
+    </div>
+  </section>
+</SiteLayout>

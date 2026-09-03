@@ -51,6 +51,7 @@
               '';
             };
             build = npmScript "build" "build";
+            test-site = npmScript "test-site" "test";
             preview = npmScript "preview" "preview";
             ci = pkgs.writeShellApplication {
               name = "ci";
@@ -58,11 +59,13 @@
                 setup
                 check
                 build
+                test-site
               ];
               text = ''
                 setup
                 check
                 build
+                test-site
               '';
             };
           };

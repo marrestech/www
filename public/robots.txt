@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://marres.io/sitemap.xml

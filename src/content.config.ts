@@ -208,6 +208,11 @@ const home = defineCollection({
           columns: z
             .array(z.object({ heading: text, links: z.array(link) }).strict())
             .length(1),
+          legalName: text,
+          uen: text,
+          location: text,
+          email: text,
+          publicLinks: z.array(link).length(4),
         })
         .strict(),
     })

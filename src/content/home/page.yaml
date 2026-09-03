@@ -228,3 +228,16 @@ footer:
           href: "#solutions"
         - label: How it works
           href: "#method"
+  legalName: Marres Insights Pte Ltd
+  uen: UEN 202604012K
+  location: Singapore
+  email: marresinsights@gmail.com
+  publicLinks:
+    - label: Contact
+      href: /contact
+    - label: Privacy
+      href: /privacy
+    - label: Terms
+      href: /terms
+    - label: Security
+      href: /security
