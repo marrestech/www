@@ -11,7 +11,7 @@ const email = entry.data.footer.email;
 const meta = {
   title: "Security at Marres | Marres",
   description:
-    "Read the verified application and hosting controls that protect Marres accounts, tenant data, provider calls, and secrets.",
+    "Read about the high-level controls that protect Marres accounts and customer data.",
   canonicalUrl: "https://marres.io/security",
 };
 ---
@@ -23,78 +23,35 @@ const meta = {
       <h1>Security</h1>
       <p class="legal-date">Updated 3 September 2026</p>
       <p class="legal-intro">
-        This page lists controls verified in the current Marres application and
-        required before production launch. Marres does not claim a
-        certification, independent audit, or security guarantee.
+        This page describes the high-level controls used to protect Marres
+        accounts and customer data. Marres does not claim a certification,
+        independent audit, or security guarantee.
       </p>
 
       <section>
-        <h2>Accounts and passwords</h2>
+        <h2>Accounts and access</h2>
         <p>
-          Marres hashes passwords with Argon2id and a unique random salt. Plain
-          passwords are not stored. Password work runs in a bounded blocking
-          task pool so login traffic cannot create an unbounded set of password
-          jobs.
-        </p>
-        <p>
-          Unknown accounts receive dummy password-hash work, and login errors do
-          not reveal whether an email address exists.
+          Marres securely hashes passwords and does not store them in plain
+          text. Access checks restrict each user to authorised organisations and
+          actions.
         </p>
       </section>
 
       <section>
-        <h2>Sessions and request protection</h2>
+        <h2>Sessions and requests</h2>
         <p>
-          Sessions are stored on the server in PostgreSQL. Session cookies are
-          HTTP-only and use SameSite=Lax. Public HTTPS deployment must enable
-          the Secure cookie flag. Login rotates the session identifier, and
-          logout invalidates the server-side session.
-        </p>
-        <p>
-          Browser form submissions for authentication, onboarding, billing, and
-          logout require a session-bound CSRF token. Marres compares submitted
-          tokens in constant time and rejects missing or invalid tokens.
+          Marres protects browser sessions and sensitive requests against
+          unauthorised use. Production access requires encrypted network
+          connections.
         </p>
       </section>
 
       <section>
-        <h2>Tenant access</h2>
+        <h2>Service operations</h2>
         <p>
-          Each user resolves through one tenant membership. Protected analysis,
-          onboarding, and billing queries include the resolved tenant.
-          Owner-only actions check the membership role again before changing
-          billing or onboarding data.
-        </p>
-      </section>
-
-      <section>
-        <h2>Provider boundaries and provenance</h2>
-        <p>
-          Apify collection uses a pinned Actor build with limits on reviews,
-          time, response size, concurrency, and charge. It is configured not to
-          collect reviewer personal data.
-        </p>
-        <p>
-          OpenRouter requests pin Luna and embedding models to OpenAI, disable
-          provider fallback, and apply limits on time, response size,
-          concurrency, retries, and cost. Marres records provider, model, build,
-          attempt, input, output, and source provenance needed to inspect a run.
-        </p>
-      </section>
-
-      <section>
-        <h2>Hosting and secrets</h2>
-        <p>
-          Before public launch, the production configuration requires HTTPS,
-          permits public traffic only on port 443, terminates TLS at a reverse
-          proxy, keeps the app on a local interface, and requires a TLS-enabled
-          PostgreSQL connection. The app.marres.io cutover is not complete.
-        </p>
-        <p>
-          The application reads its database, Stripe, Apify, and OpenRouter
-          credentials at runtime instead of storing them in source code. The
-          production configuration covers database, DNS, and repository
-          credentials in encrypted configuration and restricted runtime files.
+          We limit and monitor automated processing and access to external
+          services. We restrict service credentials and do not store them in
+          public source code.
         </p>
       </section>
 
