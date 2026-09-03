@@ -750,7 +750,6 @@ main section {
   display: grid;
   margin-top: 62px;
   padding: 28px;
-  border-top: 1px solid var(--line);
   color: #9ca1a5;
   font-size: 13px;
   grid-template-columns: repeat(3, 1fr);
