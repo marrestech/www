@@ -17,7 +17,7 @@ navigation:
       href: "#solutions"
     - label: How it works
       href: "#method"
-    - label: Pricing
+    - label: Private beta
       href: "#pricing"
   signIn:
     label: Sign in
@@ -157,26 +157,16 @@ trace:
     - title: Monitor and trace
       description: Watch material signals and preserve assumptions, approvals and outcomes.
 pricing:
-  tag: Pricing
+  tag: Private beta
   heading: Serious decision intelligence,
-  fadedHeading: within reach.
-  description: Built for businesses too small for enterprise platforms—and making decisions too important to leave untested.
-  plans:
-    - badge: Monthly
-      name: LAUNCH
-      price: S$99
-      period: / month
-      actionLabel: Get started
-      href: https://app.marres.io/register
-      featured: true
-      features:
-        - label: Up to 5,000 sources per company for one target and six competitors
-        - label: Four Decision Panel decisions per month
-        - label: Weekly Marres Brief
-          status: Coming soon!
+  fadedHeading: now in private beta.
+  description: Register for free private-beta access to Marres.
+  action:
+    label: Register for free
+    href: https://app.marres.io/register
   assurances:
-    - Cancel anytime. No lock-in.
-    - Research usage remains transparent.
+    - No payment required.
+    - Access is subject to approval.
     - Your projects stay private.
 continuity:
   tag: Continuity
